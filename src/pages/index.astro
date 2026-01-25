@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar';
+import Hero from '../components/Hero';
+import Products from '../components/Products';
+import Team from '../components/Team';
+import Contact from '../components/Contact';
+import Footer from '../components/Footer';
+---
+
+<Layout title="Edge Vision - Giải pháp AI cho doanh nghiệp">
+  <main>
+    <Navbar client:load />
+    <Hero client:load />
+    <Products client:visible />
+    <Team client:visible />
+    <Contact client:visible />
+    <Footer />
+  </main>
+</Layout>
