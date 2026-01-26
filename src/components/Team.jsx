@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 
 const Team = () => {
     const members = [
-        { name: "Nguyễn Văn A", role: "CEO", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" },
-        { name: "Nguyễn Văn B", role: "Fullstack Developer", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka" },
-        { name: "Nguyễn Văn C", role: "Mobile Developer", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Zack" },
-        { name: "Nguyễn Văn D", role: "AI Researcher", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sara" },
-        { name: "Nguyễn Văn E", role: "AI Researcher", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Milo" },
-        { name: "Nguyễn Văn F", role: "AI Researcher", img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Lily" },
+        { name: "Hoàng Tiến Đức", role: "CEO", img: "members/hoang-tien-duc.png" },
+        { name: "Nguyễn Duy Thăng", role: "Fullstack Developer", img: "members/nguyen-duy-thang.png" },
+        { name: "Trương Tuấn Anh", role: "Mobile Developer", img: "members/truong-tuan-anh.png" },
+        { name: "Đỗ Danh Phương", role: "AI Researcher", img: "members/do-danh-phuong.png" },
+        { name: "Hoàng Mạnh Đoàn", role: "AI Researcher", img: "members/hoang-manh-doan.png" },
+        { name: "Ngô Xuân Lộc", role: "AI Researcher", img: "members/ngo-xuan-loc.png" },
     ];
 
     return (
