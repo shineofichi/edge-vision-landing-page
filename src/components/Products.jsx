@@ -9,6 +9,7 @@ const Products = () => {
             description: "Phần mềm quản lý doanh nghiệp toàn diện sử dụng trí tuệ nhân tạo. Tự động hóa quy trình, tối ưu chi phí và nâng cao hiệu suất.",
             icon: <Smartphone className="w-12 h-12 text-cyan-400" />,
             link: "https://play.google.com/store/apps/details?id=com.evgoodwork&hl=vi",
+            link2: "https://goodwork.io.vn/",
             features: ["Quản lý nhân sự", "Tự động hóa báo cáo", "Chấm công AI"],
             highlight: true
         },
@@ -71,6 +72,18 @@ const Products = () => {
                                         {feature}
                                     </li>
                                 ))}
+                                {product.link2 && (
+                                    <li>
+                                        <a
+                                            href={product.link2}
+                                            target={product.link2.startsWith('http') ? "_blank" : "_self"}
+                                            rel="noopener noreferrer"
+                                            className={`inline-flex items-center gap-2 text-sm font-semibold ${product.highlight ? 'text-cyan-400 hover:text-cyan-300' : 'text-gray-400 hover:text-white'}`}
+                                        >
+                                            Trang chủ <ExternalLink size={16} />
+                                        </a>
+                                    </li>
+                                )}
                             </ul>
 
                             <a

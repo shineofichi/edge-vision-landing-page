@@ -16,16 +16,16 @@ const Footer = () => {
                     </div>
 
                     <div className="flex gap-6">
-                        <a href="#" className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-cyan-400 hover:bg-gray-700 transition-all">
+                        {/* <a href="#" className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-cyan-400 hover:bg-gray-700 transition-all">
                             <Github size={20} />
-                        </a>
-                        <a href="#" className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-cyan-400 hover:bg-gray-700 transition-all">
+                        </a> */}
+                        {/* <a href="#" className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-cyan-400 hover:bg-gray-700 transition-all">
                             <Twitter size={20} />
-                        </a>
-                        <a href="#" className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-cyan-400 hover:bg-gray-700 transition-all">
+                        </a> */}
+                        <a href="https://www.linkedin.com/company/edge-vision-vn/" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-cyan-400 hover:bg-gray-700 transition-all">
                             <Linkedin size={20} />
                         </a>
-                        <a href="mailto:contact@edgevision.ai" className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-cyan-400 hover:bg-gray-700 transition-all">
+                        <a href="mailto:support@edgevision.io.vn" className="p-2 bg-gray-800 rounded-full text-gray-400 hover:text-cyan-400 hover:bg-gray-700 transition-all">
                             <Mail size={20} />
                         </a>
                     </div>

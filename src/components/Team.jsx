@@ -8,7 +8,7 @@ const Team = () => {
         { name: "Trương Tuấn Anh", role: "Mobile Developer", img: "members/truong-tuan-anh.png" },
         { name: "Đỗ Danh Phương", role: "AI Researcher", img: "members/do-danh-phuong.png" },
         { name: "Hoàng Mạnh Đoàn", role: "AI Researcher", img: "members/hoang-manh-doan.png" },
-        { name: "Ngô Xuân Lộc", role: "AI Researcher", img: "members/ngo-xuan-loc.png" },
+        { name: "Peter X", role: "AI Researcher", img: "members/ngo-xuan-loc.png" },
     ];
 
     return (
