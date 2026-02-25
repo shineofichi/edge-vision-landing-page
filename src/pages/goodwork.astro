@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import Hero from '../components/goodwork/Hero';
+import Features from '../components/goodwork/Features';
+import CTA from '../components/goodwork/CTA';
+---
+
+<Layout title="Good Work - Giải pháp AI toàn diện cho doanh nghiệp">
+  <main class="bg-black min-h-screen">
+    <Navbar client:load />
+    <Hero client:load />
+    <Features client:visible />
+    <CTA client:visible />
+    <Footer />
+  </main>
+</Layout>

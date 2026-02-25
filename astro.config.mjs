@@ -6,6 +6,9 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
     vite: {
         plugins: [tailwindcss()],
+        server: {
+            allowedHosts: ['dev.anhtt.io.vn']
+        }
     },
     integrations: [react()],
 });

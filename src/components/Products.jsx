@@ -8,7 +8,7 @@ const Products = () => {
             title: "Good Work",
             description: "Phần mềm quản lý doanh nghiệp toàn diện sử dụng trí tuệ nhân tạo. Tự động hóa quy trình, tối ưu chi phí và nâng cao hiệu suất.",
             icon: <Smartphone className="w-12 h-12 text-cyan-400" />,
-            link: "https://play.google.com/store/apps/details?id=com.evgoodwork&hl=vi",
+            link: "/goodwork",
             link2: "https://goodwork.io.vn/",
             features: ["Quản lý nhân sự", "Tự động hóa báo cáo", "Chấm công AI"],
             highlight: true

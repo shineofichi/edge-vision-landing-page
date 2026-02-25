@@ -19,10 +19,10 @@ const Navbar = () => {
     }, []);
 
     const navLinks = [
-        { name: 'Trang chủ', href: '#home' },
-        { name: 'Sản phẩm', href: '#products' },
-        { name: 'Đội ngũ', href: '#team' },
-        { name: 'Liên hệ', href: '#contact' },
+        { name: 'Trang chủ', href: '/' },
+        { name: 'Sản phẩm', href: '/#products' },
+        { name: 'Đội ngũ', href: '/#team' },
+        { name: 'Liên hệ', href: '/#contact' },
     ];
 
     return (
@@ -31,7 +31,7 @@ const Navbar = () => {
                 }`}
         >
             <div className="container mx-auto px-6 flex justify-between items-center">
-                <a href="#" className="flex items-center gap-2 text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+                <a href="/" className="flex items-center gap-2 text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
                     <img src="/ev-logo.svg" alt="Edge Vision Logo" className="h-10 w-auto" />
                     <span>Edge Vision</span>
                 </a>
@@ -48,7 +48,7 @@ const Navbar = () => {
                         </a>
                     ))}
                     <a
-                        href="#contact"
+                        href="/#contact"
                         className="px-6 py-2 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transition-all"
                     >
                         Bắt đầu ngay
