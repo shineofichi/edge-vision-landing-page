@@ -1,153 +1,212 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Send, MapPin, Phone, Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AlertCircle, CheckCircle2, Clock3, Mail, MapPin, Phone, Send, Shield } from 'lucide-react';
+import { getMessages } from '../lib/i18n';
 
-const Contact = () => {
-    const [status, setStatus] = useState('idle'); // idle, sending, success, error
+const reveal = (reduceMotion, delay = 0) =>
+  reduceMotion
+    ? { initial: false }
+    : {
+        initial: false,
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, amount: 0.24 },
+        transition: {
+          duration: 0.64,
+          delay,
+          ease: [0.16, 1, 0.3, 1],
+        },
+      };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setStatus('sending');
+const initialStatus = 'idle';
 
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
+const Contact = ({ lang = 'vi' }) => {
+  const reduceMotion = useReducedMotion();
+  const [status, setStatus] = useState(initialStatus);
+  const { contact } = getMessages(lang);
+  const contactDetails = [
+    { icon: Mail, ...contact.details[0] },
+    { icon: Phone, ...contact.details[1] },
+    { icon: MapPin, ...contact.details[2] },
+  ];
+  const supportFlow = [
+    { icon: Clock3, ...contact.supportFlow[0] },
+    { icon: Shield, ...contact.supportFlow[1] },
+  ];
 
-        try {
-            const response = await fetch("https://formsubmit.co/ajax/support@edgevision.io.vn", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setStatus('sending');
 
-            if (response.ok) {
-                setStatus('success');
-                e.target.reset();
-            } else {
-                setStatus('error');
-            }
-        } catch (error) {
-            setStatus('error');
-            console.error("Form error:", error);
-        }
-    };
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
 
-    return (
-        <section id="contact" className="py-20 bg-zinc-950 text-white relative">
-            <div className="container mx-auto px-6 max-w-5xl">
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/support@edgevision.io.vn', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Request failed');
+      }
+
+      event.target.reset();
+      setStatus('success');
+    } catch (error) {
+      console.error('Form error:', error);
+      setStatus('error');
+    }
+  };
+
+  return (
+    <section id="contact" className="py-20 sm:py-24">
+      <div className="section-shell">
+        <div className="grid gap-6 lg:grid-cols-[0.84fr_1.16fr]">
+          <motion.div {...reveal(reduceMotion)} className="surface-panel p-6 sm:p-8">
+            <h2 className="text-3xl font-bold text-[var(--text)] sm:text-4xl">{contact.title}</h2>
+            <p className="mt-5 text-base leading-7 text-[var(--text-muted)] sm:text-lg">
+              {contact.description}
+            </p>
+
+            <div className="mt-8 space-y-4">
+              {contactDetails.map(({ icon: Icon, title, content }, index) => (
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-12"
+                  key={title}
+                  {...reveal(reduceMotion, 0.08 + index * 0.05)}
+                  className="rounded-[22px] border border-[var(--line)] bg-[color-mix(in_srgb,var(--bg-elevated)_78%,transparent)] p-4"
                 >
+                  <div className="flex items-start gap-4">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[var(--accent-soft)] text-[var(--accent)]">
+                      <Icon size={20} />
+                    </span>
                     <div>
-                        <h2 className="text-4xl font-bold mb-6">Liên Hệ Với Chúng Tôi</h2>
-                        <p className="text-gray-400 mb-8 leading-relaxed">
-                            Sẵn sàng tư vấn giải pháp AI phù hợp nhất cho doanh nghiệp của bạn.
-                            Hãy để lại thông tin, chúng tôi sẽ phản hồi trong vòng 24h.
-                        </p>
-
-                        <div className="space-y-6">
-                            <div className="flex items-start gap-4">
-                                <div className="p-3 bg-gray-900 rounded-lg text-cyan-400">
-                                    <MapPin size={24} />
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-white">Địa chỉ</h4>
-                                    <p className="text-gray-400 text-sm">Hà Nội, Việt Nam</p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start gap-4">
-                                <div className="p-3 bg-gray-900 rounded-lg text-cyan-400">
-                                    <Mail size={24} />
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-white">Email</h4>
-                                    <p className="text-gray-400 text-sm">support@edgevision.io.vn</p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start gap-4">
-                                <div className="p-3 bg-gray-900 rounded-lg text-cyan-400">
-                                    <Phone size={24} />
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-white">Hotline</h4>
-                                    <p className="text-gray-400 text-sm">+84 383 341 242</p>
-                                </div>
-                            </div>
-                        </div>
+                      <h3 className="text-sm font-bold text-[var(--accent)]">{title}</h3>
+                      <p className="mt-2 text-sm leading-6 text-[var(--text)]">{content}</p>
                     </div>
-
-                    <div className="bg-gray-900/30 p-8 rounded-2xl border border-gray-800 relative overflow-hidden">
-                        <AnimatePresence>
-                            {status === 'success' && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0 }}
-                                    className="absolute inset-0 bg-gray-900/95 backdrop-blur-sm flex flex-col items-center justify-center z-20 text-center p-6"
-                                >
-                                    <CheckCircle className="text-green-500 w-16 h-16 mb-4" />
-                                    <h3 className="text-2xl font-bold text-white mb-2">Đã gửi thành công!</h3>
-                                    <p className="text-gray-400 mb-6">Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi sớm nhất.</p>
-                                    <button
-                                        onClick={() => setStatus('idle')}
-                                        className="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-white font-medium transition-colors"
-                                    >
-                                        Gửi tin nhắn khác
-                                    </button>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            {/* Formsubmit Configuration Hidden Fields handled via AJAX body mostly, but keeping clean structure */}
-                            <input type="hidden" name="_subject" value="Liên hệ mới từ Landing Page AI" />
-                            <input type="hidden" name="_captcha" value="false" />
-                            <input type="hidden" name="_template" value="table" />
-
-                            <div>
-                                <label className="block text-sm font-medium text-gray-400 mb-1">Họ và tên</label>
-                                <input type="text" name="name" required disabled={status === 'sending'} className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition-colors disabled:opacity-50" placeholder="Nguyễn Văn A" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-400 mb-1">Email</label>
-                                <input type="email" name="email" required disabled={status === 'sending'} className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition-colors disabled:opacity-50" placeholder="email@example.com" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-400 mb-1">Tin nhắn</label>
-                                <textarea name="message" required rows="4" disabled={status === 'sending'} className="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition-colors disabled:opacity-50" placeholder="Nội dung cần tư vấn..."></textarea>
-                            </div>
-
-                            {status === 'error' && (
-                                <div className="flex items-center gap-2 text-red-400 text-sm bg-red-900/20 p-3 rounded-lg border border-red-900/50">
-                                    <AlertCircle size={16} />
-                                    Có lỗi xảy ra. Vui lòng thử lại sau.
-                                </div>
-                            )}
-
-                            <button
-                                type="submit"
-                                disabled={status === 'sending'}
-                                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold py-3 rounded-lg hover:shadow-lg hover:shadow-cyan-500/25 transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
-                            >
-                                {status === 'sending' ? (
-                                    <>Đang gửi... <Loader2 size={18} className="animate-spin" /></>
-                                ) : (
-                                    <>Gửi Tin Nhắn <Send size={18} /></>
-                                )}
-                            </button>
-                        </form>
-                    </div>
+                  </div>
                 </motion.div>
+              ))}
             </div>
-        </section>
-    );
+
+            <div className="mt-6 grid gap-4">
+              {supportFlow.map(({ icon: Icon, title, description }, index) => (
+                <motion.article
+                  key={title}
+                  {...reveal(reduceMotion, 0.14 + index * 0.06)}
+                  className="rounded-[22px] border border-[var(--line)] bg-[color-mix(in_srgb,var(--bg-elevated)_78%,transparent)] p-5"
+                >
+                  <div className="flex items-center gap-3 text-[var(--accent)]">
+                    <Icon size={18} />
+                    <h3 className="text-sm font-bold">{title}</h3>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-[var(--text-muted)]">{description}</p>
+                </motion.article>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div {...reveal(reduceMotion, 0.06)} className="surface-panel relative overflow-hidden p-6 sm:p-8">
+            <AnimatePresence>
+              {status === 'success' ? (
+                <motion.div
+                  initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={reduceMotion ? {} : { opacity: 0, y: -12 }}
+                  className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-[color-mix(in_srgb,var(--bg-elevated)_92%,transparent)] px-6 text-center backdrop-blur-xl"
+                >
+                  <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--accent-soft)] text-[var(--accent)]">
+                    <CheckCircle2 size={32} />
+                  </span>
+                  <h3 className="text-2xl font-bold text-[var(--text)]">{contact.successTitle}</h3>
+                  <p className="max-w-md text-sm leading-6 text-[var(--text-muted)]">
+                    {contact.successBody}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setStatus(initialStatus)}
+                    className="button-secondary focus-ring text-sm"
+                  >
+                    {contact.successButton}
+                  </button>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
+
+            <div className="max-w-2xl">
+              <h3 className="text-xl font-bold text-[var(--text)] sm:text-2xl">{contact.formTitle}</h3>
+              <p className="mt-3 text-sm leading-6 text-[var(--text-muted)]">
+                {contact.formDescription}
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+              <input type="hidden" name="_subject" value={contact.subject} />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <label className="block">
+                  <span className="mb-2 block text-sm font-semibold text-[var(--text)]">{contact.nameLabel}</span>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    disabled={status === 'sending'}
+                    placeholder={contact.namePlaceholder}
+                    className="focus-ring w-full rounded-[20px] border border-[var(--line-strong)] bg-[var(--bg-elevated)] px-4 py-3 text-sm text-[var(--text)] placeholder:text-[color:var(--text-muted)]/80 disabled:cursor-not-allowed disabled:opacity-65"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block text-sm font-semibold text-[var(--text)]">{contact.emailLabel}</span>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    disabled={status === 'sending'}
+                    placeholder={contact.emailPlaceholder}
+                    className="focus-ring w-full rounded-[20px] border border-[var(--line-strong)] bg-[var(--bg-elevated)] px-4 py-3 text-sm text-[var(--text)] placeholder:text-[color:var(--text-muted)]/80 disabled:cursor-not-allowed disabled:opacity-65"
+                  />
+                </label>
+              </div>
+
+              <label className="block">
+                <span className="mb-2 block text-sm font-semibold text-[var(--text)]">{contact.messageLabel}</span>
+                <textarea
+                  name="message"
+                  rows="6"
+                  required
+                  disabled={status === 'sending'}
+                  placeholder={contact.messagePlaceholder}
+                  className="focus-ring w-full rounded-[24px] border border-[var(--line-strong)] bg-[var(--bg-elevated)] px-4 py-3 text-sm leading-6 text-[var(--text)] placeholder:text-[color:var(--text-muted)]/80 disabled:cursor-not-allowed disabled:opacity-65"
+                />
+              </label>
+
+              {status === 'error' ? (
+                <div className="flex items-start gap-3 rounded-[20px] border border-red-500/25 bg-red-500/10 px-4 py-3 text-sm text-red-700 dark:text-red-300">
+                  <AlertCircle size={18} className="mt-0.5 shrink-0" />
+                  <p>{contact.errorMessage}</p>
+                </div>
+              ) : null}
+
+              <button
+                type="submit"
+                disabled={status === 'sending'}
+                className="button-primary focus-ring w-full text-sm sm:w-auto"
+              >
+                {status === 'sending' ? contact.submitSending : contact.submitIdle}
+                <Send size={16} />
+              </button>
+            </form>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Contact;

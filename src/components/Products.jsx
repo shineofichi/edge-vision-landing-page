@@ -1,105 +1,160 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Smartphone, BarChart3, ShieldCheck, ExternalLink } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowUpRight, Blocks, Building2, Cpu, ShieldCheck } from 'lucide-react';
+import { getLocalizedPath, getMessages } from '../lib/i18n';
 
-const Products = () => {
-    const products = [
-        {
-            title: "Good Work",
-            description: "Phần mềm quản lý doanh nghiệp toàn diện sử dụng trí tuệ nhân tạo. Tự động hóa quy trình, tối ưu chi phí và nâng cao hiệu suất.",
-            icon: <Smartphone className="w-12 h-12 text-cyan-400" />,
-            link: "/goodwork",
-            link2: "https://goodwork.io.vn/",
-            features: ["Quản lý nhân sự", "Tự động hóa báo cáo", "Chấm công AI"],
-            highlight: true
+const reveal = (reduceMotion, delay = 0) =>
+  reduceMotion
+    ? { initial: false }
+    : {
+        initial: false,
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, amount: 0.25 },
+        transition: {
+          duration: 0.64,
+          delay,
+          ease: [0.16, 1, 0.3, 1],
         },
-        {
-            title: "AI Consultant",
-            description: "Giải pháp tư vấn AI chuyên sâu cho doanh nghiệp SME, giúp xây dựng lộ trình chuyển đổi số hiệu quả.",
-            icon: <BarChart3 className="w-12 h-12 text-purple-400" />,
-            link: "#",
-            features: ["Phân tích dữ liệu", "Dự báo xu hướng", "Tối ưu vận hành"],
-            highlight: false
-        },
-        {
-            title: "Secure Infrastructure",
-            description: "Hạ tầng bảo mật cao cấp, giúp doanh nghiệp làm chủ dữ liệu của mình mà không phụ thuộc bên thứ 3.",
-            icon: <ShieldCheck className="w-12 h-12 text-blue-400" />,
-            link: "#",
-            features: ["Bảo mật 2 lớp", "Lưu trữ nội bộ", "Quyền riêng tư tuyệt đối"],
-            highlight: false
-        }
-    ];
+      };
 
-    return (
-        <section id="products" className="py-20 bg-zinc-950 text-white relative overflow-hidden">
-            {/* Background Gradient */}
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black to-zinc-900 opacity-50 z-0"></div>
+const Products = ({ lang = 'vi' }) => {
+  const reduceMotion = useReducedMotion();
+  const { products } = getMessages(lang);
+  const goodworkPath = getLocalizedPath(lang, 'goodwork');
+  const productCards = [
+    { icon: Building2, href: '#contact', ...products.sideCards[0] },
+    { icon: ShieldCheck, href: '#contact', ...products.sideCards[1] },
+  ];
 
-            <div className="container mx-auto px-6 relative z-10">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="text-4xl font-bold mb-4">Sản Phẩm & Giải Pháp</h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
-                        Các ứng dụng AI thiết thực giúp doanh nghiệp vận hành thông minh hơn.
-                    </p>
-                </motion.div>
+  return (
+    <section id="products" className="py-20 sm:py-24">
+      <div className="section-shell">
+        <motion.div {...reveal(reduceMotion)} className="max-w-3xl">
+          <span className="section-kicker">{products.kicker}</span>
+          <h2 className="mt-6 text-3xl font-bold text-[var(--text)] sm:text-4xl lg:text-5xl">
+            {products.title}
+          </h2>
+          <p className="mt-5 max-w-[43rem] text-base leading-7 text-[var(--text-muted)] sm:text-lg">
+            {products.description}
+          </p>
+        </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {products.map((product, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.2 }}
-                            className={`p-8 rounded-2xl border ${product.highlight ? 'border-cyan-500/50 bg-gradient-to-b from-gray-900 to-gray-900/50 shadow-lg shadow-cyan-900/20' : 'border-gray-800 bg-gray-900/30 hover:bg-gray-800/50'} transition-all group`}
-                        >
-                            <div className="mb-6 p-4 rounded-full bg-gray-800/50 w-fit group-hover:scale-110 transition-transform duration-300">
-                                {product.icon}
-                            </div>
-                            <h3 className="text-2xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">{product.title}</h3>
-                            <p className="text-gray-400 mb-6 text-sm leading-relaxed">{product.description}</p>
-
-                            <ul className="mb-8 space-y-2">
-                                {product.features.map((feature, i) => (
-                                    <li key={i} className="flex items-center text-sm text-gray-300">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 mr-2"></span>
-                                        {feature}
-                                    </li>
-                                ))}
-                                {product.link2 && (
-                                    <li>
-                                        <a
-                                            href={product.link2}
-                                            target={product.link2.startsWith('http') ? "_blank" : "_self"}
-                                            rel="noopener noreferrer"
-                                            className={`inline-flex items-center gap-2 text-sm font-semibold ${product.highlight ? 'text-cyan-400 hover:text-cyan-300' : 'text-gray-400 hover:text-white'}`}
-                                        >
-                                            Trang chủ <ExternalLink size={16} />
-                                        </a>
-                                    </li>
-                                )}
-                            </ul>
-
-                            <a
-                                href={product.link}
-                                target={product.link.startsWith('http') ? "_blank" : "_self"}
-                                rel="noopener noreferrer"
-                                className={`inline-flex items-center gap-2 text-sm font-semibold ${product.highlight ? 'text-cyan-400 hover:text-cyan-300' : 'text-gray-400 hover:text-white'}`}
-                            >
-                                Xem chi tiết <ExternalLink size={16} />
-                            </a>
-                        </motion.div>
-                    ))}
+        <div className="mt-10 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+          <motion.article
+            {...reveal(reduceMotion, 0.04)}
+            className="surface-panel overflow-hidden p-5 sm:p-6"
+          >
+            <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+              <figure className="overflow-hidden rounded-[24px] border border-[var(--line)] bg-[var(--surface-strong)]">
+                <img
+                  src="/imagery/operations.jpg"
+                  alt={products.featureAlt}
+                  className="h-full min-h-[320px] w-full object-cover"
+                />
+              </figure>
+              <div className="flex flex-col justify-between gap-6">
+                <div>
+                  <div className="flex items-center gap-3 text-[var(--accent)]">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--accent-soft)]">
+                      <Blocks size={20} />
+                    </span>
+                    <span className="text-sm font-semibold">{products.featuredLabel}</span>
+                  </div>
+                  <h3 className="mt-5 text-2xl font-bold text-[var(--text)] sm:text-3xl">{products.featuredTitle}</h3>
+                  <p className="mt-4 text-base leading-7 text-[var(--text-muted)]">
+                    {products.featuredDescription}
+                  </p>
                 </div>
+
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {products.featuredPoints.map((point) => (
+                    <div
+                      key={point.title}
+                      className="rounded-[22px] border border-[var(--line)] bg-[color-mix(in_srgb,var(--bg-elevated)_80%,transparent)] p-4"
+                    >
+                      <h4 className="text-sm font-bold text-[var(--text)]">{point.title}</h4>
+                      <p className="mt-2 text-sm leading-6 text-[var(--text-muted)]">{point.body}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <a href={goodworkPath} className="button-primary focus-ring text-sm">
+                    {products.featuredPrimaryCta}
+                    <ArrowUpRight size={16} />
+                  </a>
+                  <a
+                    href="https://goodwork.io.vn/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="button-secondary focus-ring text-sm"
+                  >
+                    {products.featuredSecondaryCta}
+                  </a>
+                </div>
+              </div>
             </div>
-        </section>
-    );
+          </motion.article>
+
+          <div className="grid gap-6">
+            {productCards.map(({ title, description, icon: Icon, points, href, cta }, index) => (
+              <motion.article
+                key={title}
+                {...reveal(reduceMotion, 0.12 + index * 0.06)}
+                className="surface-panel flex h-full flex-col justify-between p-6"
+              >
+                <div>
+                  <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--accent-soft)] text-[var(--accent)]">
+                    <Icon size={20} />
+                  </span>
+                  <h3 className="mt-5 text-2xl font-bold text-[var(--text)]">{title}</h3>
+                  <p className="mt-4 text-sm leading-6 text-[var(--text-muted)]">{description}</p>
+                </div>
+
+                <div className="mt-6 space-y-3">
+                  {points.map((point) => (
+                    <div
+                      key={point}
+                      className="rounded-[20px] border border-[var(--line)] bg-[color-mix(in_srgb,var(--bg-elevated)_80%,transparent)] px-4 py-3 text-sm font-medium text-[var(--text)]"
+                    >
+                      {point}
+                    </div>
+                  ))}
+                </div>
+
+                <a href={href} className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[var(--accent)] hover:text-[var(--accent-strong)]">
+                  {cta}
+                  <ArrowUpRight size={16} />
+                </a>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+
+        <motion.div
+          {...reveal(reduceMotion, 0.1)}
+          className="surface-panel mt-6 grid gap-4 px-5 py-5 sm:px-6 lg:grid-cols-3"
+        >
+          {products.bottomCards.map((card, index) => (
+            <div
+              key={card.title}
+              className="rounded-[22px] border border-[var(--line)] bg-[color-mix(in_srgb,var(--bg-elevated)_75%,transparent)] p-5"
+            >
+              {index === 0 ? (
+                <div className="flex items-center gap-3 text-[var(--accent)]">
+                  <Cpu size={18} />
+                  <h3 className="text-sm font-bold">{card.title}</h3>
+                </div>
+              ) : (
+                <h3 className="text-sm font-bold text-[var(--accent)]">{card.title}</h3>
+              )}
+              <p className="mt-3 text-sm leading-6 text-[var(--text-muted)]">{card.body}</p>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
 };
 
 export default Products;

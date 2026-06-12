@@ -1,27 +1,82 @@
 ---
 import '../index.css';
 
-interface Props {
-  title: string;
+interface AlternateLink {
+  href: string;
+  hreflang: string;
 }
 
-const { title } = Astro.props;
+interface Props {
+  title: string;
+  description: string;
+  lang?: string;
+  canonical?: string;
+  alternates?: AlternateLink[];
+  ogImage?: string;
+  ogImageAlt?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
+  ogLocale?: string;
+  structuredData?: Record<string, any>[];
+}
+
+const {
+  title,
+  description,
+  lang = 'vi',
+  canonical,
+  alternates = [],
+  ogImage,
+  ogImageAlt,
+  ogImageWidth,
+  ogImageHeight,
+  ogLocale = 'vi_VN',
+  structuredData = [],
+} = Astro.props;
 ---
 
 <!doctype html>
-<html lang="vi">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Edge Vision - Giải pháp AI toàn diện cho doanh nghiệp SMEs" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta
+      name="robots"
+      content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0f766e" />
     <link rel="icon" type="image/svg+xml" href="/ev-logo.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    {canonical ? <link rel="canonical" href={canonical} /> : null}
+    {alternates.map((alternate) => (
+      <link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />
+    ))}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Edge Vision" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical ? <meta property="og:url" content={canonical} /> : null}
+    <meta property="og:locale" content={ogLocale} />
+    {ogImage ? <meta property="og:image" content={ogImage} /> : null}
+    {ogImageAlt ? <meta property="og:image:alt" content={ogImageAlt} /> : null}
+    {ogImageWidth ? <meta property="og:image:width" content={String(ogImageWidth)} /> : null}
+    {ogImageHeight ? <meta property="og:image:height" content={String(ogImageHeight)} /> : null}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImage ? <meta name="twitter:image" content={ogImage} /> : null}
+    {ogImageAlt ? <meta name="twitter:image:alt" content={ogImageAlt} /> : null}
+
+    {structuredData.map((entry) => (
+      <script type="application/ld+json" set:html={JSON.stringify(entry)} />
+    ))}
   </head>
-  <body class="bg-black text-white selection:bg-cyan-500/30 font-sans">
+  <body class="page-shell">
     <slot />
   </body>
 </html>

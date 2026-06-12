@@ -6,15 +6,42 @@ import Products from '../components/Products';
 import Team from '../components/Team';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+import {
+  buildBreadcrumbSchema,
+  buildOrganizationSchema,
+  buildWebsiteSchema,
+  getPageSeo,
+} from '../lib/i18n';
+
+const lang = 'vi';
+const pageKey = 'home';
+const seo = getPageSeo(lang, pageKey);
+const structuredData = [
+  buildOrganizationSchema(),
+  buildWebsiteSchema(lang),
+  buildBreadcrumbSchema(lang, pageKey),
+];
 ---
 
-<Layout title="Edge Vision - Giải pháp AI cho doanh nghiệp">
+<Layout
+  title={seo.title}
+  description={seo.description}
+  lang={seo.lang}
+  canonical={seo.canonical}
+  alternates={seo.alternates}
+  ogImage={seo.ogImage}
+  ogImageAlt={seo.ogImageAlt}
+  ogImageWidth={seo.ogImageWidth}
+  ogImageHeight={seo.ogImageHeight}
+  ogLocale={seo.ogLocale}
+  structuredData={structuredData}
+>
   <main>
-    <Navbar client:load />
-    <Hero client:load />
-    <Products client:visible />
-    <Team client:visible />
-    <Contact client:visible />
-    <Footer />
+    <Navbar client:load lang={lang} pageKey={pageKey} />
+    <Hero client:load lang={lang} />
+    <Products client:visible lang={lang} />
+    <Team client:visible lang={lang} />
+    <Contact client:visible lang={lang} />
+    <Footer client:load lang={lang} />
   </main>
 </Layout>

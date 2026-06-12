@@ -1,83 +1,100 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Bot, Cpu, Network } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowRight, Orbit, ShieldCheck, Waypoints } from 'lucide-react';
+import { getMessages } from '../lib/i18n';
 
-const Hero = () => {
-    return (
-        <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black pt-20">
-            {/* Background Effects */}
-            <div className="absolute inset-0 z-0">
-                <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-                <div className="absolute top-0 -right-4 w-72 h-72 bg-cyan-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-                <div className="absolute -bottom-8 left-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+const reveal = (reduceMotion, delay = 0) =>
+  reduceMotion
+    ? { initial: false }
+    : {
+        initial: false,
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, amount: 0.25 },
+        transition: {
+          duration: 0.7,
+          delay,
+          ease: [0.16, 1, 0.3, 1],
+        },
+      };
+
+const Hero = ({ lang = 'vi' }) => {
+  const reduceMotion = useReducedMotion();
+  const { hero } = getMessages(lang);
+  const signals = [
+    { icon: ShieldCheck, ...hero.signals[0] },
+    { icon: Orbit, ...hero.signals[1] },
+    { icon: Waypoints, ...hero.signals[2] },
+  ];
+
+  return (
+    <section id="home" className="relative overflow-hidden pt-28 sm:pt-32">
+      <div className="section-shell">
+        <div className="grid min-h-[100dvh] items-center gap-10 pb-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14 lg:pb-20">
+          <motion.div {...reveal(reduceMotion)} className="max-w-[38rem]">
+            <span className="section-kicker">{hero.kicker}</span>
+            <h1 className="mt-6 text-4xl font-bold leading-[1.02] text-[var(--text)] sm:text-5xl lg:text-6xl">
+              {hero.title}
+            </h1>
+            <p className="mt-6 max-w-[34rem] text-base leading-7 text-[var(--text-muted)] sm:text-lg">
+              {hero.description}
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href="#products" className="button-primary focus-ring text-sm sm:text-base">
+                {hero.primaryCta}
+                <ArrowRight size={18} />
+              </a>
+              <a href="#contact" className="button-secondary focus-ring text-sm sm:text-base">
+                {hero.secondaryCta}
+              </a>
             </div>
+          </motion.div>
 
-            <div className="container mx-auto px-6 relative z-10 text-center">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="max-w-4xl mx-auto"
-                >
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-900/50 border border-gray-800 text-cyan-400 text-sm mb-6 backdrop-blur-sm">
-                        <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-                        </span>
-                        Tiên phong công nghệ AI
+          <motion.div
+            {...reveal(reduceMotion, 0.08)}
+            className="surface-panel overflow-hidden p-4 sm:p-5 lg:p-6"
+          >
+            <div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
+              <figure className="overflow-hidden rounded-[22px] border border-[var(--line)] bg-[var(--surface-strong)]">
+                <img
+                  src="/imagery/hero-enterprise.jpg"
+                  alt={hero.heroAlt}
+                  className="h-full min-h-[340px] w-full object-cover"
+                />
+              </figure>
+              <div className="grid gap-4">
+                {signals.map(({ icon: Icon, title, body }, index) => (
+                  <motion.article
+                    key={title}
+                    {...reveal(reduceMotion, 0.12 + index * 0.06)}
+                    className="surface-muted rounded-[22px] border border-[var(--line)] p-5"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--accent-soft)] text-[var(--accent)]">
+                        <Icon size={20} />
+                      </span>
+                      <h2 className="text-base font-bold text-[var(--text)]">{title}</h2>
                     </div>
-
-                    <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                        Thấu hiểu doanh nghiệp
-                        <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">
-                            Nâng tầm với AI
-                        </span>
-                    </h1>
-
-                    <p className="text-gray-400 text-lg md:text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
-                        Mang tới cho doanh nghiệp vừa và nhỏ các giải pháp ứng dụng AI với chi phí rẻ nhất,
-                        giúp doanh nghiệp làm chủ hạ tầng và bứt phá doanh thu.
-                    </p>
-
-                    <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-                        <a
-                            href="#products"
-                            className="group px-8 py-3 rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-all flex items-center gap-2"
-                        >
-                            Khám phá giải pháp
-                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </a>
-                        <a
-                            href="#contact"
-                            className="px-8 py-3 rounded-full border border-gray-700 hover:border-cyan-500 hover:text-cyan-400 transition-all text-gray-300"
-                        >
-                            Liên hệ tư vấn
-                        </a>
-                    </div>
-                </motion.div>
-
-                {/* Floating Icons */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1, duration: 1 }}
-                    className="absolute top-1/4 left-10 hidden lg:block opacity-30 pointer-events-none"
-                >
-                    <Bot size={48} className="text-gray-800 animate-bounce delay-700" />
-                </motion.div>
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.2, duration: 1 }}
-                    className="absolute bottom-1/4 right-10 hidden lg:block opacity-30 pointer-events-none"
-                >
-                    <Cpu size={48} className="text-gray-800 animate-bounce delay-100" />
-                </motion.div>
-
+                    <p className="mt-3 text-sm leading-6 text-[var(--text-muted)]">{body}</p>
+                  </motion.article>
+                ))}
+              </div>
             </div>
-        </section>
-    );
+          </motion.div>
+        </div>
+
+        <motion.div
+          {...reveal(reduceMotion, 0.1)}
+          className="surface-panel mb-8 grid gap-4 px-5 py-5 sm:px-6 lg:grid-cols-3 lg:px-8"
+        >
+          {hero.operatingModes.map((item) => (
+            <div key={item} className="rounded-[22px] border border-[var(--line)] bg-[color-mix(in_srgb,var(--bg-elevated)_75%,transparent)] px-5 py-5">
+              <p className="text-sm font-semibold leading-6 text-[var(--text)]">{item}</p>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
 };
 
 export default Hero;

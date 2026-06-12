@@ -1,18 +1,23 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import Hero from '../components/goodwork/Hero';
-import Features from '../components/goodwork/Features';
-import CTA from '../components/goodwork/CTA';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import Hero from '../../components/goodwork/Hero';
+import Features from '../../components/goodwork/Features';
+import CTA from '../../components/goodwork/CTA';
 import {
   buildBreadcrumbSchema,
   buildOrganizationSchema,
   buildSoftwareApplicationSchema,
   getPageSeo,
-} from '../lib/i18n';
+  secondaryLocales,
+} from '../../lib/i18n';
 
-const lang = 'vi';
+export function getStaticPaths() {
+  return secondaryLocales.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang;
 const pageKey = 'goodwork';
 const seo = getPageSeo(lang, pageKey);
 const structuredData = [
