@@ -289,10 +289,10 @@ html.landing-html {
   .consultation { grid-template-columns:minmax(0,1fr);padding:32px 2px 0 }
   .fields { grid-template-columns:minmax(0,1fr) }
   .foot { margin:38px 0 16px;border-radius:24px }
-  .foot-grid { grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:16px }
+  .foot-grid { grid-template-columns:minmax(0,.68fr) minmax(0,1.32fr);gap:16px }
   .foot .about { grid-column:span 2;margin-bottom:6px }
   .foot-connect { grid-column:2 }
-  .foot-connect .foot-contact { font-size:.88rem }
+  .foot .foot-connect .foot-contact { font-size:.875rem }
   .legal { margin-top:24px }
 }
 @media (prefers-reduced-motion:reduce) {
@@ -301,6 +301,8 @@ html.landing-html {
 }
 @media (max-width:360px) {
   .nav-r .btn-dark { padding-inline:8px }
+}
+@media (max-width:380px) {
   .foot-grid { grid-template-columns:minmax(0,1fr) }
   .foot .about,.foot-connect { grid-column:1 }
 }
