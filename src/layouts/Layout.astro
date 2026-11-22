@@ -1,6 +1,4 @@
 ---
-import '../index.css';
-
 interface AlternateLink {
   href: string;
   hreflang: string;
@@ -18,6 +16,7 @@ interface Props {
   ogImageHeight?: number;
   ogLocale?: string;
   structuredData?: Record<string, any>[];
+  landing?: boolean;
 }
 
 const {
@@ -32,11 +31,12 @@ const {
   ogImageHeight,
   ogLocale = 'vi_VN',
   structuredData = [],
+  landing = false,
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={lang} class:list={[{ 'landing-html': landing }]}>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
@@ -45,8 +45,10 @@ const {
       content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0f766e" />
-    <link rel="icon" type="image/svg+xml" href="/ev-logo.svg" />
+    <meta name="theme-color" content={landing ? '#f6f0e7' : '#0f766e'} />
+    {landing
+      ? <link rel="icon" type="image/webp" href="/imagery/landing/edge-vision-mark.webp" />
+      : <link rel="icon" type="image/svg+xml" href="/ev-logo.svg" />}
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
 
@@ -75,8 +77,9 @@ const {
     {structuredData.map((entry) => (
       <script type="application/ld+json" set:html={JSON.stringify(entry)} />
     ))}
+    <slot name="head" />
   </head>
-  <body class="page-shell">
+  <body class={landing ? 'landing-body' : 'page-shell'}>
     <slot />
   </body>
 </html>

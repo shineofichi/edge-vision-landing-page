@@ -4,7 +4,7 @@ export const secondaryLocales = ["en", "ja"];
 export const pageKeys = ["home", "goodwork"];
 
 export const siteConfig = {
-  siteUrl: "https://edgevision.io.vn",
+  siteUrl: import.meta.env?.PUBLIC_SITE_URL || "https://edgevision.io.vn",
   siteName: "Edge Vision",
   goodworkUrl: "https://goodwork.io.vn/",
   linkedinUrl: "https://www.linkedin.com/company/edge-vision-vn/",

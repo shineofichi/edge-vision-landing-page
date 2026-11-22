@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://edgevision.io.vn',
+    site: process.env.PUBLIC_SITE_URL || 'https://edgevision.io.vn',
     vite: {
         plugins: [tailwindcss()],
         server: {

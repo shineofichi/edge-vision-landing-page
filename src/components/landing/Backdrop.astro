@@ -1,0 +1,16 @@
+---
+const { scene } = Astro.props;
+const hero = scene === 'hero';
+const path = `/imagery/landing/${scene}`;
+---
+<video class="media" id={`v-${scene}`} data-video={path} muted loop playsinline preload="none" aria-hidden="true"></video>
+<img
+  class="media kb"
+  src={`${path}-640.webp`}
+  srcset={`${path}-640.webp 640w, ${path}-1440.webp 1440w`}
+  sizes="(max-width: 640px) 640px, (max-width: 1440px) calc(100vw - 48px), 1392px"
+  loading={hero ? 'eager' : 'lazy'}
+  fetchpriority={hero ? 'high' : 'low'}
+  decoding="async"
+  alt=""
+/>
