@@ -2,10 +2,12 @@
 import Backdrop from './Backdrop.astro';
 import { landingCopy } from './copy.js';
 import { getLocalizedPath, getMessages, languageOptions, siteConfig } from '../../lib/i18n';
+import { getGoodworkDocs } from '../../lib/goodwork-docs';
 
 const { lang } = Astro.props;
 const { navbar, hero, products, team, contact, footer } = getMessages(lang);
 const copy = landingCopy[lang as keyof typeof landingCopy];
+const documents = getGoodworkDocs(lang);
 const [featured, ...members] = team.members;
 const goodwork = getLocalizedPath(lang, 'goodwork');
 const links = [
@@ -310,6 +312,8 @@ const portrait = (path: string) => path.replace('/members/', '/imagery/landing/'
               <li><a href={goodwork}>Good Work</a></li>
               {links.map(({ name, href }) => <li><a {href}>{name}</a></li>)}
               <li><a href="#contact">{navbar.links[3].name}</a></li>
+              <li><a href={getLocalizedPath(lang, 'goodwork-support')}>{documents.supportLabel}</a></li>
+              <li><a href={getLocalizedPath(lang, 'goodwork-privacy')}>{documents.privacyLabel}</a></li>
             </ul>
           </div>
           <div class="foot-connect rv" style="--d:2">
