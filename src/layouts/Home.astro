@@ -1,0 +1,23 @@
+---
+import Layout from './Layout.astro';
+import Landing from '../components/landing/Landing.astro';
+import { buildBreadcrumbSchema, buildOrganizationSchema, buildWebsiteSchema, getPageSeo } from '../lib/i18n';
+import motionStyles from '../components/landing/motion.css?raw';
+import landingStyles from '../components/landing/landing.css?raw';
+import '../components/landing/fonts.css';
+
+const { lang } = Astro.props;
+const seo = getPageSeo(lang, 'home');
+const structuredData = [
+  buildOrganizationSchema(),
+  buildWebsiteSchema(lang),
+  buildBreadcrumbSchema(lang, 'home'),
+];
+---
+
+<Layout {...seo} {structuredData} landing>
+  <Fragment slot="head">
+    <style is:inline set:html={motionStyles + '\n' + landingStyles}></style>
+  </Fragment>
+  <Landing {lang} />
+</Layout>

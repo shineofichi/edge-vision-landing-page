@@ -1,0 +1,338 @@
+---
+import Backdrop from './Backdrop.astro';
+import { landingCopy } from './copy.js';
+import { getLocalizedPath, getMessages, languageOptions, siteConfig } from '../../lib/i18n';
+import { getGoodworkDocs } from '../../lib/goodwork-docs';
+
+const { lang } = Astro.props;
+const { navbar, hero, products, team, contact, footer } = getMessages(lang);
+const copy = landingCopy[lang as keyof typeof landingCopy];
+const documents = getGoodworkDocs(lang);
+const [featured, ...members] = team.members;
+const goodwork = getLocalizedPath(lang, 'goodwork');
+const links = [
+  { name: navbar.links[1].name, href: '#products' },
+  { name: navbar.links[2].name, href: '#team' },
+  { name: copy.partners, href: '#partners' },
+];
+const languages = languageOptions.map(({ code, label }) => ({
+  code, label, href: getLocalizedPath(code, 'home'),
+}));
+const photos = {
+  hero: '/imagery/landing/hero-enterprise.webp',
+  work: '/imagery/landing/operations.webp',
+  mobile: '/imagery/landing/goodwork-mobile.webp',
+};
+const mark = '/imagery/landing/edge-vision-mark.webp';
+const portrait = (path: string) => path.replace('/members/', '/imagery/landing/').replace(/\.png$/, '.webp');
+---
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <nav class="nav-l" aria-label={footer.navTitle}>
+      {links.map(({ name, href }) => <a class="pill" {href}>{name}</a>)}
+    </nav>
+    <a href="#home" class="logo" aria-label="Edge Vision">
+      <img src={mark} alt="" width="38" height="38" /><span>Edge Vision</span>
+    </a>
+    <div class="nav-r">
+      <details class="lang">
+        <summary aria-label={navbar.languageLabel}>{lang.toUpperCase()} <span aria-hidden="true">⌄</span></summary>
+        <div class="language-menu">
+          {languages.map(({ code, label, href }) => (
+            <a {href} hreflang={code} aria-current={code === lang ? 'page' : undefined}>{label}</a>
+          ))}
+        </div>
+      </details>
+      <a class="btn-dark" href="#contact">{navbar.cta}</a>
+      <button class="burger" id="burger" type="button" aria-controls="mmenu" aria-expanded="false"
+        aria-label={navbar.openMenu} data-open={navbar.openMenu} data-close={navbar.closeMenu}>
+        <i></i><i></i>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="mmenu" id="mmenu" aria-label={footer.navTitle} data-lenis-prevent inert>
+  {links.map(({ name, href }) => <a {href}>{name}</a>)}
+  <a href="#contact">{navbar.links[3].name}</a>
+  <div class="mobile-langs" aria-label={navbar.languageLabel}>
+    {languages.map(({ code, label, href }) => (
+      <a class="pill" {href} hreflang={code} aria-current={code === lang ? 'page' : undefined}>{label}</a>
+    ))}
+  </div>
+</nav>
+
+<main>
+  <section class="hero" id="home" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero-head">
+        <p class="eyebrow rv" style="--base:80ms">{hero.kicker}</p>
+        <h1 id="hero-title" class="h-display split" data-split>{copy.headline.join(' ')}<br />{copy.headlineAccent}</h1>
+        <p class="hero-sub rv" style="--base:120ms">{hero.description}</p>
+        <div class="hero-actions rv" style="--base:160ms">
+          <a class="btn-dark" href="#products">{hero.primaryCta}</a>
+          <a class="pill" href="#contact">{hero.secondaryCta}</a>
+        </div>
+      </div>
+
+      <div class="hero-card rv rv-scale" style="--base:180ms">
+        <Backdrop scene="hero" />
+        <div class="shade"></div>
+        <div id="studio" class="studio">
+          <div class="chat">
+            <p class="chat-top msg">{copy.studio}</p>
+            {copy.prompts.map((prompt, index) => {
+              const signal = hero.signals[index === 0 ? 1 : 0];
+              return (
+                <Fragment>
+                  <p class="bubble msg">{prompt}</p>
+                  <div class="ai msg">
+                    <span class="ai-ic"><img src={mark} width="16" height="16" alt="" /></span>
+                    <p class="ai-t" data-text={signal.body}>{signal.body}</p>
+                  </div>
+                </Fragment>
+              );
+            })}
+            <div class="cd msg">
+              <div><small>EDGE VISION</small><strong>{copy.plan}</strong></div>
+              <div class="slider" aria-hidden="true"><div class="track"><b id="hero-track"></b></div></div>
+            </div>
+          </div>
+          <div class="prod">
+            <p class="chat-top msg">{copy.output}</p>
+            <figure class="msg" id="hero-fig"><img src={photos.hero} alt={hero.heroAlt} fetchpriority="low" decoding="async" /></figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s-bento" id="products" aria-labelledby="products-title">
+    <div class="wrap">
+      <div class="bento-shell">
+        <Backdrop scene="bento" />
+        <div class="sec-head">
+          <p class="eyebrow rv">{products.kicker}</p>
+          <h2 id="products-title" class="h2 split" data-split>{copy.solutions[0]}<br /><span class="lt">{copy.solutions[1]}</span></h2>
+          <p class="lead rv" style="--d:3">{products.description}</p>
+        </div>
+
+        <div class="bento">
+          <article class="card c-big rv" style="--d:1">
+            <img src={photos.work} alt="" loading="lazy" />
+            <div>
+              <p class="feature-label">{products.featuredLabel}</p>
+              <h3>{products.featuredTitle}</h3>
+              <p class="desc">{products.featuredDescription}</p>
+            </div>
+            <div>
+              <ul class="feature-points">
+                {products.featuredPoints.map(({ title, body }) => <li><strong>{title}</strong><p>{body}</p></li>)}
+              </ul>
+              <a class="btn-white" href={goodwork}>{products.featuredPrimaryCta}</a>
+              <a class="quiet-link" href={siteConfig.goodworkUrl} target="_blank" rel="noopener noreferrer">{products.featuredSecondaryCta}</a>
+            </div>
+          </article>
+
+          <article class="card c-pad rv" style="--d:2">
+            <div class="collage" aria-hidden="true">
+              <img src={photos.hero} alt="" loading="lazy" /><img src={photos.work} alt="" loading="lazy" />
+            </div>
+            <div class="txt">
+              <h3>{products.sideCards[0].title}</h3><p>{products.sideCards[0].description}</p>
+              <ul>{products.sideCards[0].points.map((point) => <li>{point}</li>)}</ul>
+              <a class="quiet-link" href="#contact">{products.sideCards[0].cta}</a>
+            </div>
+          </article>
+
+          <article class="card c-pad rv" id="gauge-card" style="--d:3">
+            <div class="gauge" aria-hidden="true">
+              <svg viewBox="0 0 180 100" width="162" height="90" fill="none">
+                <defs><linearGradient id="gg"><stop stop-color="#82a7ca" /><stop offset="1" stop-color="#d88858" /></linearGradient></defs>
+                <path d="M10 95 A80 80 0 0 1 170 95" stroke="currentColor" opacity=".12" stroke-width="12" stroke-linecap="round" />
+                <path d="M10 95 A80 80 0 0 1 170 95" id="g-arc" stroke="url(#gg)" stroke-width="12" stroke-linecap="round" />
+              </svg>
+              <div class="val"><span data-count="94">94</span>%</div>
+              <small>{copy.diagram}</small>
+            </div>
+            <div class="txt">
+              <h3>{products.sideCards[1].title}</h3><p>{products.sideCards[1].description}</p>
+              <ul>{products.sideCards[1].points.map((point) => <li>{point}</li>)}</ul>
+              <a class="quiet-link" href="#contact">{products.sideCards[1].cta}</a>
+            </div>
+          </article>
+
+          <article class="card c-pad rv" style="--d:4">
+            <div class="rows">
+              {products.bottomCards.map(({ title, body }, index) => (
+                <div class="row" style={`--i:${index}`}>
+                  <span class="ok" aria-hidden="true">✓</span>
+                  <div><h3>{title}</h3><p>{body}</p></div>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <article class="card c-pad rv" id="partners" style="--d:5">
+            <div class="txt partner-heading"><h3>{copy.partners}</h3></div>
+            <div class="partner-grid">
+              <div class="partner"><img src="/partners/nam-long-logistics.png" alt="Nam Long Logistics" width="251" height="100" loading="lazy" /></div>
+              <div class="partner bt">
+                <img src="/partners/dieu-hoa-bt.webp" alt="Điều Hòa B&amp;T" width="760" height="136" loading="lazy" decoding="async" />
+                <span>{copy.bt}</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s-prod" id="team" aria-labelledby="team-title">
+    <div class="wrap">
+      <div class="prod-shell">
+        <div class="sec-head">
+          <p class="eyebrow rv">{navbar.links[2].name}</p>
+          <h2 id="team-title" class="h2 split" data-split>{copy.people[0]}<br /><span class="lt">{copy.people[1]}</span></h2>
+          <p class="lead rv" style="--d:3">{team.description}</p>
+        </div>
+        <div class="stage" id="stage">
+          <div class="col">
+            <article class="g-card rv" style="--d:1">
+              <h3>{copy.plan}</h3>
+              <ul class="checks">{hero.operatingModes.map((item) => <li>{item}</li>)}</ul>
+              <div class="bar" aria-hidden="true"><b></b></div>
+            </article>
+            <article class="g-card rv" style="--d:2">
+              <h3>{hero.signals[2].title}</h3>
+              <p>{hero.signals[2].body}</p>
+              <a class="quiet-link" href={goodwork}>{products.featuredPrimaryCta}</a>
+            </article>
+          </div>
+
+          <figure class="hand rv" style="--d:2">
+            <img id="hand-img" src={portrait(featured.img)} alt="" loading="lazy" decoding="async" />
+            <figcaption>
+              <small>{team.featuredRoleLabel}</small>
+              <strong>{featured.name}</strong>
+              <span>{featured.role} · Edge Vision</span>
+            </figcaption>
+          </figure>
+
+          <div class="col">
+            <article class="g-card rv" id="match-card" style="--d:3">
+              <h3>{products.featuredTitle}</h3>
+              <p>{products.featuredPoints[0].body}</p>
+              <div class="match-row">
+                <div class="ring" aria-hidden="true">
+                  <svg viewBox="0 0 62 62" fill="none" width="62" height="62">
+                    <circle cx="31" cy="31" r="26" stroke="currentColor" stroke-width="6" opacity=".12" />
+                    <circle id="ring-arc" cx="31" cy="31" r="26" stroke="#ba703f" stroke-width="6" stroke-linecap="round" />
+                  </svg>
+                  <span><b data-count="94">94</b>%</span>
+                </div>
+                <small>{copy.diagram}</small>
+                <img src={photos.mobile} alt="" loading="lazy" />
+              </div>
+            </article>
+            <article class="g-card rv" style="--d:4">
+              <h3>{team.featuredRoleLabel}</h3>
+              <p>{team.featuredDescription}</p>
+            </article>
+          </div>
+        </div>
+        <div class="team-detail">
+          <div class="team-intro rv">
+            <h3>{team.title}</h3>
+            <ul class="checks">{team.principles.map((item) => <li>{item}</li>)}</ul>
+          </div>
+          <div class="members">
+            {members.map(({ name, img, role }, index) => (
+              <article class="member rv" style={`--d:${index + 1}`}>
+                <img src={portrait(img)} alt="" width="54" height="54" loading="lazy" decoding="async" />
+                <div><h3>{name}</h3><p>{role}</p></div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s-foot" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="cta rv rv-scale">
+        <Backdrop scene="cta" />
+        <div class="cta-copy">
+          <h2 id="contact-title" class="split" data-split>{copy.consultation[0]}<br />{copy.consultation[1]}</h2>
+          <p class="rv" style="--d:2">{contact.description}</p>
+          <a href="#consultation" class="btn-dark rv" style="--d:3">{navbar.cta}</a>
+        </div>
+      </div>
+
+      <div class="consultation" id="consultation">
+        <div class="rv">
+          <h3>{contact.title}</h3>
+          <ul class="checks">{contact.supportFlow.map(({ title, description }) => <li><div><strong>{title}</strong><p>{description}</p></div></li>)}</ul>
+        </div>
+        <form class="contact-form rv" style="--d:1" id="contact-form"
+          method="post" action={`https://formsubmit.co/${siteConfig.supportEmail}`}
+          data-sending={contact.submitSending} data-success={contact.successTitle} data-success-body={contact.successBody}
+          data-error={contact.errorMessage}>
+          <h3>{contact.formTitle}</h3>
+          <p>{contact.formDescription}</p>
+          <input type="hidden" name="_subject" value={contact.subject} />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+          <div class="fields">
+            <label>{contact.nameLabel}<input name="name" autocomplete="name" required placeholder={contact.namePlaceholder} /></label>
+            <label>{contact.emailLabel}<input name="email" type="email" autocomplete="email" required placeholder={contact.emailPlaceholder} /></label>
+          </div>
+          <label>{contact.messageLabel}<textarea name="message" rows="4" required placeholder={contact.messagePlaceholder}></textarea></label>
+          <button type="submit" class="btn-dark">{contact.submitIdle}</button>
+          <p class="form-status" role="status"></p>
+        </form>
+      </div>
+
+      <footer class="foot">
+        <div class="foot-grid">
+          <div class="about rv">
+            <h3>
+              <a href="#home" class="foot-brand">
+                <span class="foot-brand-mark"><img src={mark} width="37" height="37" alt="" loading="lazy" /></span>
+                <span>Edge Vision</span>
+              </a>
+            </h3>
+            <p class="foot-tagline">{footer.brandLine}</p>
+            <p>{footer.description}</p>
+          </div>
+          <div class="rv" style="--d:1">
+            <h3>{footer.navTitle}</h3>
+            <ul>
+              <li><a href={goodwork}>Good Work</a></li>
+              {links.map(({ name, href }) => <li><a {href}>{name}</a></li>)}
+              <li><a href="#contact">{navbar.links[3].name}</a></li>
+              <li><a href={getLocalizedPath(lang, 'goodwork-support')}>{documents.supportLabel}</a></li>
+              <li><a href={getLocalizedPath(lang, 'goodwork-privacy')}>{documents.privacyLabel}</a></li>
+            </ul>
+          </div>
+          <div class="foot-connect rv" style="--d:2">
+            <h3>{footer.connectTitle}</h3>
+            <ul>
+              <li><a class="foot-contact" href={`mailto:${siteConfig.supportEmail}`}>{contact.details[0].content}</a></li>
+              <li><a class="foot-contact" href={`tel:${siteConfig.phoneNumber.replace(/\s/g, '')}`}>{contact.details[1].content}</a></li>
+              <li>{contact.details[2].content}</li>
+              <li><a href={siteConfig.linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="legal">© {new Date().getFullYear()} Edge Vision. {footer.copyright}</div>
+      </footer>
+    </div>
+  </section>
+</main>
+
+<script>
+  import './interactions.js';
+  import './motion.js';
+</script>

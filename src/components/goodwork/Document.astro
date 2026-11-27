@@ -1,0 +1,153 @@
+---
+import '../../index.css';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../Navbar';
+import Footer from '../Footer';
+import { getGoodworkDocs } from '../../lib/goodwork-docs';
+import {
+  buildOrganizationSchema,
+  getAlternateLinks,
+  getCanonicalUrl,
+  getLocale,
+  getLocalizedPath,
+  getOgLocale,
+  siteConfig,
+} from '../../lib/i18n';
+
+interface Props {
+  lang?: string;
+  kind: 'support' | 'privacy';
+}
+
+const lang = getLocale(Astro.props.lang);
+const kind = Astro.props.kind;
+const copy = getGoodworkDocs(lang);
+const document = copy[kind];
+const pageKey = `goodwork-${kind}`;
+const email = siteConfig.supportEmail;
+const emailLink = `mailto:${email}?subject=${encodeURIComponent(kind === 'privacy' ? 'Good Work — Privacy / Yêu cầu về dữ liệu' : 'Good Work — Support / Yêu cầu hỗ trợ')}`;
+const phoneLink = `tel:${siteConfig.phoneNumber.replace(/\s/g, '')}`;
+const canonical = getCanonicalUrl(lang, pageKey);
+---
+
+<Layout
+  title={`${document.title} | Edge Vision`}
+  description={document.description}
+  lang={lang}
+  canonical={canonical}
+  alternates={getAlternateLinks(pageKey)}
+  ogLocale={getOgLocale(lang)}
+  structuredData={[
+    buildOrganizationSchema(),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: document.title,
+      description: document.description,
+      url: canonical,
+      inLanguage: lang,
+      ...(kind === 'privacy' ? { dateModified: '2026-11-27' } : {}),
+    },
+  ]}
+>
+  <a href="#document" class="skip-link focus-ring">{copy.contents}</a>
+  <Navbar client:load lang={lang} pageKey={pageKey} />
+  <main id="document" class="section-shell pb-10 pt-36 sm:pt-44">
+    <header class="document-heading">
+      <a class="focus-ring back-link" href={getLocalizedPath(lang, 'goodwork')}>
+        <span aria-hidden="true">←</span> {copy.back}
+      </a>
+      <p class="mt-7 text-sm font-bold uppercase tracking-widest text-[var(--accent)]">{copy.product}</p>
+      <h1 class="mt-4 max-w-4xl text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">{document.title}</h1>
+      <p class="mt-6 max-w-3xl text-base leading-8 text-[var(--text-muted)] sm:text-lg">{document.intro}</p>
+      {kind === 'support' && (
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href={emailLink} class="button-primary focus-ring">{copy.emailAction} <span aria-hidden="true">↗</span></a>
+          <a href={phoneLink} class="button-secondary focus-ring">{siteConfig.phoneNumber}</a>
+        </div>
+      )}
+      {kind === 'privacy' && <p class="mt-5 text-sm text-[var(--text-muted)]"><time datetime="2026-11-27">{copy.updated}</time></p>}
+    </header>
+
+    <div class="document-grid mt-10 sm:mt-14">
+      <aside>
+        <div class="document-sidebar surface-panel p-6">
+          <nav aria-label={copy.navigation} class="grid gap-2 border-b border-[var(--line)] pb-5">
+            {(['support', 'privacy'] as const).map((item) => (
+              <a
+                href={getLocalizedPath(lang, `goodwork-${item}`)}
+                aria-current={kind === item ? 'page' : undefined}
+                class:list={['focus-ring document-nav', { active: kind === item }]}
+              >{item === 'privacy' ? copy.privacyLabel : copy.supportLabel}</a>
+            ))}
+          </nav>
+          <nav aria-label={copy.contents} class="mt-5">
+            <p class="text-xs font-bold uppercase tracking-widest text-[var(--text-muted)]">{copy.contents}</p>
+            <ol class="mt-4 grid gap-3">
+              {document.sections.map((section) => (
+                <li><a class="focus-ring toc-link" href={`#${section.id}`}>{section.title}</a></li>
+              ))}
+            </ol>
+          </nav>
+        </div>
+      </aside>
+
+      <div class="min-w-0">
+        <article class="surface-panel document-body p-6 sm:p-10 lg:p-12">
+          {document.sections.map((section) => (
+            <section id={section.id} aria-labelledby={`${section.id}-heading`}>
+              <h2 id={`${section.id}-heading`}>{section.title}</h2>
+              {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+              {section.items.length > 0 && <ul>{section.items.map((item) => <li>{item}</li>)}</ul>}
+              {section.links.length > 0 && (
+                <ul>{section.links.map((link) => (
+                  <li><a class="focus-ring underline underline-offset-4 hover:text-[var(--accent)]" href={link.href}>{link.label}</a></li>
+                ))}</ul>
+              )}
+            </section>
+          ))}
+        </article>
+
+        <section aria-labelledby="support-contact-heading" class="surface-panel mt-6 p-6 sm:p-8">
+          <h2 id="support-contact-heading" class="text-2xl font-bold">{copy.contact}</h2>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <a href={emailLink} class="button-primary focus-ring">{copy.emailAction} <span aria-hidden="true">↗</span></a>
+            <a href={phoneLink} class="button-secondary focus-ring">{copy.phoneAction}</a>
+          </div>
+          <div class="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-[var(--text-muted)]">
+            <a class="focus-ring break-all underline underline-offset-4" href={emailLink}>{email}</a>
+            <a class="focus-ring underline underline-offset-4" href={phoneLink}>{siteConfig.phoneNumber}</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+  <Footer client:load lang={lang} />
+</Layout>
+
+<style>
+  .document-heading { max-width: 1100px; }
+  .back-link { display: inline-flex; align-items: center; gap: .6rem; border-radius: .25rem; color: var(--text-muted); font-size: .875rem; font-weight: 600; }
+  .back-link:hover, .toc-link:hover { color: var(--accent); }
+  .document-grid { display: grid; gap: 1.5rem; }
+  .document-nav { padding: .75rem .85rem; border-radius: .75rem; font-size: .875rem; font-weight: 700; }
+  .document-nav.active { color: var(--accent); background: var(--accent-soft); }
+  .toc-link { display: inline-block; border-radius: .25rem; font-size: .875rem; line-height: 1.6; color: var(--text-muted); }
+  .document-body { overflow-wrap: anywhere; }
+  .document-body section { scroll-margin-top: 8rem; }
+  .document-body section + section { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+  .document-body h2 { font-size: 1.3rem; font-weight: 700; line-height: 1.5; }
+  .document-body p, .document-body ul { margin-top: 1rem; color: var(--text-muted); line-height: 1.9; }
+  .document-body ul { padding-left: 1.3rem; list-style: disc; }
+  .document-body li + li { margin-top: .75rem; }
+  .button-primary { color: var(--bg-elevated); }
+  .skip-link { position: absolute; left: 1rem; top: -6rem; z-index: 60; padding: .8rem 1rem; border-radius: .5rem; background: var(--bg-elevated); }
+  .skip-link:focus { top: 1rem; }
+  @media (min-width: 1024px) {
+    .document-grid { grid-template-columns: 280px minmax(0, 1fr); gap: 2rem; }
+    .document-sidebar { position: sticky; top: 8rem; max-height: calc(100vh - 9rem); overflow-y: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) { scroll-behavior: auto; }
+  }
+</style>
