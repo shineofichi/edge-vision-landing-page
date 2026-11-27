@@ -47,27 +47,24 @@ export const goodworkDocs = {
           'Dữ liệu khuôn mặt và tọa độ GPS được lưu trên hạ tầng doanh nghiệp và không được gửi cho bên thứ ba. Chúng được dùng cho chức năng chấm công và xác thực liên quan trong hệ thống doanh nghiệp.',
           'Nếu không muốn sử dụng khuôn mặt hoặc vị trí, bạn có thể từ chối/thu hồi quyền trong cài đặt thiết bị và trao đổi với quản trị viên về phương án chấm công phù hợp. Một số tính năng có thể không hoạt động khi thiếu quyền tương ứng.',
         ]),
-        section('sharing', '5. Chia sẻ dữ liệu và dịch vụ bên thứ ba', [
+        section('sharing', '5. Xử lý AI nội bộ và chia sẻ dữ liệu', [
           'Người có quyền trong doanh nghiệp có thể xem và xử lý dữ liệu phù hợp với phân quyền của họ. Doanh nghiệp chịu trách nhiệm thiết lập phạm vi truy cập trong môi trường của mình.',
-          'Good Work sử dụng dịch vụ AI của OpenAI. Một phần nội dung chatbot được gửi tới OpenAI để xử lý yêu cầu và tạo phản hồi. Không gửi thông tin bí mật hoặc dữ liệu cá nhân không cần thiết trong câu hỏi hay tệp đính kèm. Liên hệ quản trị viên hoặc Edge Vision để biết phạm vi nội dung được chuyển và điều kiện xử lý áp dụng cho môi trường của bạn.',
-          'Luồng chia sẻ chatbot không bao gồm dữ liệu khuôn mặt và tọa độ GPS của chức năng chấm công. Nếu bạn tự đưa thông tin nhạy cảm vào hội thoại, thông tin đó trở thành một phần nội dung chatbot.',
+          'Good Work sử dụng hệ thống AI do chúng tôi cung cấp, chạy trên máy chủ của doanh nghiệp. Câu hỏi, nội dung hội thoại, ngữ cảnh liên quan và ảnh/tài liệu đính kèm được xử lý trên hạ tầng doanh nghiệp; không gửi đến dịch vụ AI bên thứ ba.',
+          'Nội dung chatbot và lịch sử phiên được quản lý trong hệ thống doanh nghiệp theo phân quyền. Bạn chỉ nên đưa thông tin cần thiết cho công việc vào hội thoại hoặc tệp đính kèm.',
           'Thông báo đẩy sử dụng dịch vụ Expo và nền tảng Apple/Google. Mã nhận thông báo và dữ liệu thông báo cần thiết được xử lý để chuyển thông báo tới thiết bị.',
           'Thông tin có thể được cung cấp cho cơ quan có thẩm quyền khi cần thực hiện nghĩa vụ pháp luật áp dụng.',
-        ], [], [
-          { label: 'OpenAI: quyền riêng tư và bảo vệ dữ liệu doanh nghiệp', href: 'https://openai.com/business-data/' },
-          { label: 'OpenAI: lưu trữ và kiểm soát dữ liệu khi sử dụng API', href: 'https://developers.openai.com/api/docs/guides/your-data' },
         ]),
         section('retention', '6. Lưu trữ và xóa dữ liệu', [
           'Thời hạn lưu và quy trình xóa dữ liệu do từng doanh nghiệp quyết định; Good Work không áp dụng một thời hạn chung cho tất cả doanh nghiệp. Điều này bao gồm hồ sơ tài khoản, dữ liệu chấm công, khuôn mặt, GPS, báo cáo, tệp và lịch sử hội thoại trong hệ thống doanh nghiệp.',
           'Để biết thời hạn cụ thể, cách xử lý bản sao lưu hoặc dữ liệu phải giữ lại theo nghĩa vụ pháp luật, hãy hỏi quản trị viên doanh nghiệp. Việc kết thúc sử dụng ứng dụng không tự động đồng nghĩa với việc xóa các hồ sơ nghiệp vụ do doanh nghiệp quản lý.',
           'Bạn có thể gửi yêu cầu xóa tài khoản, dữ liệu cá nhân hoặc mẫu khuôn mặt qua quản trị viên hoặc email hỗ trợ. Yêu cầu sẽ được xem xét với doanh nghiệp quản lý dữ liệu, gồm cả phạm vi có thể xóa và các nghĩa vụ lưu giữ liên quan.',
-          'Xóa ứng dụng hoặc thu hồi quyền trên điện thoại không tự xóa dữ liệu đã được gửi lên máy chủ. Phần nội dung được gửi tới OpenAI chịu điều kiện lưu giữ, xóa và sử dụng dữ liệu của dịch vụ OpenAI cùng cấu hình/thỏa thuận đang áp dụng. Thời hạn do doanh nghiệp đặt cho dữ liệu nội bộ không tự áp dụng cho bản sao tại OpenAI; xóa phiên trong Good Work cũng không tự chứng minh đã xóa dữ liệu tại OpenAI. Xem tài liệu được liên kết ở mục chia sẻ dữ liệu hoặc liên hệ hỗ trợ để biết điều kiện cụ thể.',
+          'Xóa ứng dụng hoặc thu hồi quyền trên điện thoại không tự xóa dữ liệu đã được gửi lên máy chủ. Việc xóa phiên chatbot trong ứng dụng không tự chứng minh đã xóa mọi bản sao trên máy chủ AI nội bộ hoặc bản sao lưu. Liên hệ quản trị viên doanh nghiệp để biết phạm vi và quy trình xóa dữ liệu.',
         ]),
         section('choices', '7. Quyền và lựa chọn của bạn', [], [
           'Yêu cầu được thông tin về dữ liệu đang được xử lý, truy cập hoặc chỉnh sửa thông tin không chính xác, theo phạm vi pháp luật áp dụng.',
           'Yêu cầu xóa dữ liệu, hạn chế xử lý hoặc rút lại sự đồng ý trong những trường hợp áp dụng bằng cách liên hệ quản trị viên hoặc Edge Vision.',
           'Bật/tắt quyền camera, ảnh, vị trí và thông báo trong cài đặt iOS hoặc Android. Quyền bị từ chối có thể giới hạn tính năng tương ứng.',
-          'Dùng chức năng xóa phiên chatbot nếu có trong phiên bản đang sử dụng. Liên hệ quản trị viên để làm rõ phạm vi xóa trên máy chủ, bản sao lưu và dịch vụ bên thứ ba.',
+          'Dùng chức năng xóa phiên chatbot nếu có trong phiên bản đang sử dụng. Liên hệ quản trị viên để làm rõ phạm vi xóa trên máy chủ AI nội bộ và bản sao lưu.',
         ]),
         section('security', '8. Truy cập và bảo vệ dữ liệu', [
           'Ứng dụng kết nối tới các dịch vụ backend qua HTTPS và sử dụng phiên xác thực cho các chức năng cần đăng nhập. Việc cấp quyền tài khoản và quản lý hạ tầng lưu trữ thuộc môi trường triển khai của doanh nghiệp.',
@@ -109,7 +106,7 @@ export const goodworkDocs = {
           'Doanh nghiệp quản lý thời hạn lưu và xóa dữ liệu. Việc gỡ ứng dụng không tự xóa dữ liệu trên máy chủ; yêu cầu có thể cần xác minh danh tính và đối chiếu nghĩa vụ lưu giữ hồ sơ của doanh nghiệp.',
         ]),
         section('privacy', 'Hiểu cách dữ liệu được xử lý', [
-          'Chính sách bảo mật giải thích việc sử dụng dữ liệu khuôn mặt, GPS, nội dung chatbot và các dịch vụ bên thứ ba. Bạn có thể mở chính sách qua liên kết ở bên cạnh hoặc cuối trang.',
+          'Chính sách bảo mật giải thích việc sử dụng dữ liệu khuôn mặt, GPS, xử lý chatbot bằng AI nội bộ và các dịch vụ thông báo đẩy. Bạn có thể mở chính sách qua liên kết ở bên cạnh hoặc cuối trang.',
         ]),
       ],
     },
@@ -150,27 +147,24 @@ export const goodworkDocs = {
           'Face data and GPS coordinates stay on the business’s infrastructure and are not sent to third parties. They support attendance and related verification within the business’s system.',
           'You may decline or revoke permissions in your device settings and ask your administrator about a suitable attendance alternative. Features that need those permissions may become unavailable.',
         ]),
-        section('sharing', '5. Sharing and third-party services', [
+        section('sharing', '5. Internal AI processing and data sharing', [
           'Authorized people in your business can access records according to their permissions. The business controls access within its deployment.',
-          'Good Work uses AI services provided by OpenAI. Some chatbot content is sent to OpenAI to process requests and generate responses. Do not include unnecessary confidential or personal information in questions or attachments. Contact your administrator or Edge Vision for the content transferred and processing terms used in your deployment.',
-          'This chatbot sharing does not include attendance face data or GPS coordinates. Sensitive information you manually put in a conversation becomes part of its content.',
+          'Good Work uses our own AI system running on the business’s servers. Questions, conversation content, relevant context and attached images/documents are processed on the business’s infrastructure and are not sent to third-party AI services.',
+          'Chatbot content and session history are managed within the business’s system according to access permissions. Only include information needed for your work in conversations or attachments.',
           'Push notifications use Expo and Apple/Google platform services. Notification tokens and necessary notification data are processed to deliver messages to your device.',
           'Information may be disclosed to competent authorities when required by applicable legal obligations.',
-        ], [], [
-          { label: 'OpenAI: business data privacy and protection', href: 'https://openai.com/business-data/' },
-          { label: 'OpenAI: API data retention and controls', href: 'https://developers.openai.com/api/docs/guides/your-data' },
         ]),
         section('retention', '6. Retention and deletion', [
           'Each business determines retention periods and deletion procedures. Good Work does not impose one period for every business. This covers account profiles, attendance, face data, GPS, reports, files and conversation history in the business’s system.',
           'Ask your administrator for specific periods, backup handling and records subject to legal retention. Stopping app use does not automatically erase business records managed by your business.',
           'You may request account, personal data or face reference deletion through your administrator or support email. Requests are reviewed with the business managing the data, including what can be erased and relevant retention obligations.',
-          'Uninstalling the app or revoking device permissions does not delete data already sent to a server. Content sent to OpenAI is subject to the data retention, deletion and use terms of the OpenAI service and the applicable configuration/agreement. Business-defined retention for internal records does not automatically apply to copies at OpenAI, and deleting a Good Work session does not establish deletion at OpenAI. See the documents linked in the sharing section or contact support for applicable details.',
+          'Uninstalling the app or revoking device permissions does not delete data already sent to a server. Deleting a chatbot session in the app does not establish that all copies on internal AI servers or in backups have been erased. Ask your business administrator about the scope and procedure for deletion.',
         ]),
         section('choices', '7. Your rights and choices', [], [
           'Request information about processing, access to your data or correction of inaccurate information, as applicable under law.',
           'Request deletion, restricted processing or withdrawal of consent where applicable by contacting your administrator or Edge Vision.',
           'Control camera, photo, location and notification permissions in iOS/Android settings. Denying a permission may limit its related feature.',
-          'Use chatbot session deletion where available in your app version. Ask your administrator about the scope of deletion on servers, backups and third-party services.',
+          'Use chatbot session deletion where available in your app version. Ask your administrator about the scope of deletion on internal AI servers and backups.',
         ]),
         section('security', '8. Access and data protection', [
           'The app connects to backend services over HTTPS and uses authenticated sessions for features that require sign-in. Account permissions and storage infrastructure are managed within the business’s deployment.',
@@ -212,7 +206,7 @@ export const goodworkDocs = {
           'Your business manages retention and deletion. Uninstalling does not erase server data; requests may require identity verification and review of business record-retention obligations.',
         ]),
         section('privacy', 'Understand data handling', [
-          'Our privacy policy explains face data, GPS, chatbot content and third-party services. Open it using the navigation or footer link.',
+          'Our privacy policy explains face data, GPS, internal AI processing of chatbot content and push notification services. Open it using the navigation or footer link.',
         ]),
       ],
     },
@@ -253,27 +247,24 @@ export const goodworkDocs = {
           '顔情報とGPS座標は企業のインフラに保存し、第三者には送信しません。企業システム内の勤怠と関連する認証に使用します。',
           '端末設定で権限を拒否・取り消すことができます。代替の打刻方法は管理者にご相談ください。権限に依存する機能が利用できなくなる場合があります。',
         ]),
-        section('sharing', '5. 共有と外部サービス', [
+        section('sharing', '5. 社内AI処理とデータ共有', [
           '企業内の権限を持つ担当者は、権限の範囲で記録にアクセスできます。アクセス範囲は企業が管理します。',
-          'Good WorkはOpenAIのAIサービスを利用します。要求の処理と回答生成のため、チャットボットの内容の一部をOpenAIに送信します。質問や添付に不要な機密情報・個人情報を含めないでください。送信範囲とご利用環境の処理条件は管理者またはEdge Visionにお問い合わせください。',
-          'この共有に勤怠機能の顔情報とGPS座標は含まれません。ただし、ユーザー自身が会話に入力した機微情報は会話内容の一部となります。',
+          'Good Workは当社が提供するAIシステムを企業のサーバー上で実行します。質問、会話内容、関連するコンテキスト、添付画像・文書は企業のインフラ内で処理し、第三者のAIサービスには送信しません。',
+          'チャットの内容とセッション履歴は、企業システム内でアクセス権に従って管理します。会話や添付には業務に必要な情報のみを含めてください。',
           'プッシュ通知はExpoとApple/Googleのサービスを利用し、通知トークンと配信に必要なデータを処理します。',
           '適用法令に基づく義務の履行に必要な場合、権限を持つ機関に情報を提供することがあります。',
-        ], [], [
-          { label: 'OpenAI：企業データのプライバシーと保護', href: 'https://openai.com/business-data/' },
-          { label: 'OpenAI：APIのデータ保存と管理', href: 'https://developers.openai.com/api/docs/guides/your-data' },
         ]),
         section('retention', '6. 保存と削除', [
           '保存期間と削除手順は各企業が決め、Good Work共通の期間は設けていません。対象にはアカウント、勤怠、顔情報、GPS、報告、ファイル、企業システム内の会話履歴が含まれます。',
           '具体的な期間、バックアップ、法令上保存が必要な記録は管理者に確認してください。アプリの利用終了は、企業が管理する業務記録の自動削除を意味しません。',
           '管理者またはサポートメールを通じて、アカウント、個人データ、顔の参照画像の削除を申請できます。管理企業とともに削除可能な範囲と保存義務を確認します。',
-          'アプリのアンインストールや権限の取り消しでは、送信済みのサーバーデータは削除されません。OpenAIに送信する内容には、利用するOpenAIサービスと設定・契約の保存、削除、利用条件が適用されます。企業内の保存期間はOpenAI側のコピーに自動適用されず、Good Workのセッション削除だけでOpenAI側の削除を確認することはできません。共有の項目のリンク先資料を確認するか、サポートにお問い合わせください。',
+          'アプリのアンインストールや権限の取り消しでは、送信済みのサーバーデータは削除されません。アプリ内のチャットセッション削除だけで、社内AIサーバーやバックアップ上のすべてのコピーが削除されたとは限りません。削除の範囲と手順は企業の管理者に確認してください。',
         ]),
         section('choices', '7. 権利と選択肢', [], [
           '適用法令に従い、処理の説明、データへのアクセス、不正確な情報の訂正を求めることができます。',
           '適用される場合、削除、処理の制限、同意の撤回を管理者またはEdge Visionに申請できます。',
           'iOS/Android設定でカメラ、写真、位置、通知の権限を管理できます。拒否すると関連機能が制限される場合があります。',
-          '利用バージョンにあるチャットセッション削除機能を利用できます。サーバー、バックアップ、外部サービスにおける削除範囲は管理者にご確認ください。',
+          '利用バージョンにあるチャットセッション削除機能を利用できます。社内AIサーバーとバックアップにおける削除範囲は管理者にご確認ください。',
         ]),
         section('security', '8. アクセスとデータ保護', [
           'アプリはHTTPSでバックエンドに接続し、ログインが必要な機能には認証済みセッションを使用します。アカウント権限と保存用インフラは企業の導入環境で管理されます。',
@@ -315,7 +306,7 @@ export const goodworkDocs = {
           '保存と削除は企業が管理します。アンインストールではサーバーデータは消去されません。本人確認と業務記録の保存義務の確認が必要な場合があります。',
         ]),
         section('privacy', 'データの取り扱いについて', [
-          '顔情報、GPS、チャットボット、外部サービスについては、ナビゲーションまたはフッターからプライバシーポリシーをご確認ください。',
+          '顔情報、GPS、社内AIによるチャットボット処理、プッシュ通知サービスについては、ナビゲーションまたはフッターからプライバシーポリシーをご確認ください。',
         ]),
       ],
     },

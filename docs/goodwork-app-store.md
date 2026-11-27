@@ -4,68 +4,45 @@
 
 | Ngôn ngữ | Support URL | Privacy Policy URL |
 | --- | --- | --- |
-| Việt | https://edgevision.io.vn/goodwork/support | https://edgevision.io.vn/goodwork/privacy |
-| Anh | https://edgevision.io.vn/en/goodwork/support | https://edgevision.io.vn/en/goodwork/privacy |
-| Nhật | https://edgevision.io.vn/ja/goodwork/support | https://edgevision.io.vn/ja/goodwork/privacy |
+| Việt | https://www.edgevision.io.vn/goodwork/support | https://www.edgevision.io.vn/goodwork/privacy |
+| Anh | https://www.edgevision.io.vn/en/goodwork/support | https://www.edgevision.io.vn/en/goodwork/privacy |
+| Nhật | https://www.edgevision.io.vn/ja/goodwork/support | https://www.edgevision.io.vn/ja/goodwork/privacy |
 
-Các URL chỉ sử dụng được khi nhánh chứa thay đổi đã được deploy lên tên miền trên.
-Trang là HTML tĩnh, đọc được mà không cần đăng nhập hoặc bật JavaScript. Không có
-biểu mẫu mới hoặc dịch vụ thu thập thông tin mới. Email và số điện thoại dùng lại
-`siteConfig` hiện có của website.
+Trang là HTML tĩnh, đọc được mà không cần đăng nhập hoặc bật JavaScript. Email và
+số điện thoại dùng lại `siteConfig` hiện có. Nội dung mới có hiệu lực trên website
+sau khi nhánh `dev` được deploy.
 
 ## Cơ sở nội dung (chủ sản phẩm xác nhận ngày 27/11/2026)
 
 - Good Work dành cho các doanh nghiệp đăng ký sử dụng dịch vụ.
-- Khuôn mặt và tọa độ GPS lưu trên hạ tầng của chính doanh nghiệp.
-- Một phần nội dung chatbot được gửi tới **OpenAI**; dữ liệu khuôn mặt và GPS
-  của chức năng chấm công không gửi cho bên thứ ba.
+- Khuôn mặt và tọa độ GPS lưu trên hạ tầng của chính doanh nghiệp, không gửi bên thứ ba.
+- Chatbot dùng hệ thống AI của chúng tôi chạy trên máy chủ doanh nghiệp. Nội dung
+  hội thoại, ngữ cảnh và ảnh/tài liệu đính kèm được xử lý trên hạ tầng doanh nghiệp,
+  không gửi tới dịch vụ AI bên thứ ba.
+- Backend đã sử dụng AI nội bộ với cùng API; app không cần đổi địa chỉ kết nối.
 - Thời hạn lưu và xóa dữ liệu do doanh nghiệp quyết định, không tự đặt số ngày.
+- Thông báo đẩy vẫn dùng Expo và Apple/Google; không suy rộng việc AI nội bộ thành
+  cam kết toàn bộ ứng dụng không có dịch vụ bên thứ ba.
 - Email hỗ trợ: `support@edgevision.io.vn`.
 
-Đã đối chiếu app mobile: cập nhật ảnh khuôn mặt; chấm công bằng ảnh và GPS;
-chatbot với ảnh/tài liệu và lịch sử phiên; xóa phiên chatbot; Expo push notification;
-hồ sơ, báo cáo, nhiệm vụ và tài sản. Không suy đoán rằng xóa phiên chatbot đồng
-nghĩa xóa mọi bản sao tại backend/nhà cung cấp AI.
+Chính sách Việt/Anh/Nhật nêu cùng mô hình xử lý AI nội bộ. Việc xóa phiên chatbot
+không tự chứng minh đã xóa mọi bản sao trên máy chủ và bản sao lưu.
 
-## Cần hoàn tất trước khi công bố và gửi Apple
+## Trước khi gửi Apple
 
-- Đã nêu OpenAI trong cả ba ngôn ngữ và liên kết tài liệu dữ liệu doanh nghiệp/API
-  chính thức. Cần đối chiếu tích hợp backend để xác nhận nội dung nào được gửi
-  (câu hỏi, lịch sử, ảnh, tài liệu, dữ liệu truy xuất), sản phẩm/endpoint, vùng xử lý,
-  cấu hình lưu trữ, thỏa thuận và lựa chọn chia sẻ dữ liệu đang bật. Chưa có bằng
-  chứng về cấu hình tài khoản nên không khẳng định zero retention, thời hạn 30 ngày
-  cố định hoặc không dùng dữ liệu huấn luyện cho triển khai Good Work.
-- Xác nhận nhà cung cấp có biện pháp bảo vệ dữ liệu phù hợp, và app có thông báo/
-  đồng ý cần thiết trước khi chuyển dữ liệu cá nhân cho AI bên thứ ba.
-- Kiểm tra quy trình tiếp nhận/xác minh/xóa dữ liệu, thời hạn của từng doanh
-  nghiệp, bản sao lưu và việc xóa tại nhà cung cấp AI. Chính sách mô tả yêu cầu
-  qua quản trị viên/email; chưa cam kết một SLA hoặc thời hạn chưa được xác nhận.
-- Xác nhận tên pháp lý của đơn vị vận hành và thông tin liên hệ cần công bố.
-  Trang dùng thương hiệu Edge Vision hiện có, không tự đặt tên pháp nhân.
-- Cấu hình đường dẫn chính sách trong app và kiểm tra trên binary phát hành.
-  Mã mobile hiện chỉ hiện liên kết pháp lý ở màn đăng nhập khi cả
-  `EXPO_PUBLIC_PRIVACY_URL` và `EXPO_PUBLIC_TERMS_URL` là HTTPS. Repo landing page
-  này chưa có trang điều khoản sử dụng; không dùng privacy/support thay cho terms.
-- Nếu app cho tạo tài khoản, đối chiếu yêu cầu của Apple về khởi tạo xóa tài
-  khoản trong app; trang hỗ trợ/email không tự thay thế yêu cầu đó.
-- Điền App Privacy dựa trên luồng dữ liệu thực tế, gồm thông tin liên hệ, nội dung
-  người dùng, vị trí chính xác, dữ liệu khuôn mặt và token/định danh phù hợp.
-
-Tham khảo: https://developer.apple.com/app-store/review/guidelines/#data-collection-and-storage
-
-Tài liệu OpenAI:
-
-- https://openai.com/business-data/
-- https://developers.openai.com/api/docs/guides/your-data
-
-Trang quyền riêng tư dành cho người dùng ChatGPT tại
-`https://openai.com/policies/privacy-policy/` không phải chính sách điều chỉnh nội
-dung xử lý thay khách hàng API. Nếu backend dùng OpenAI API, đối chiếu tài liệu API
-và thỏa thuận doanh nghiệp thực tế. Không suy ra thiết lập tài khoản từ mặc định
-được mô tả trong tài liệu của nhà cung cấp.
+- Deploy chính sách mới và kiểm tra lại cả ba ngôn ngữ ở URL công khai.
+- Build lại app để có liên kết chính sách ở màn hình đăng nhập, liên kết hỗ trợ
+  và thông tin AI nội bộ trong Cài đặt. Màn hình đăng nhập có URL privacy mặc định;
+  liên kết terms chỉ hiện khi có một trang điều khoản HTTPS thực tế.
+- Chọn binary mới trong App Store Connect; build 10026 chưa có các cập nhật này.
+- Kiểm tra tài khoản demo, ảnh iPhone/iPad và thông tin liên hệ xét duyệt.
+- Đối chiếu App Privacy theo luồng dữ liệu thực tế, gồm thông tin liên hệ, nội dung
+  người dùng, vị trí chính xác, khuôn mặt và token/định danh phù hợp. AI nội bộ không
+  tự làm thay đổi các loại dữ liệu được app xử lý trên máy chủ doanh nghiệp.
+- Kiểm tra quy trình tiếp nhận, xác minh và xóa dữ liệu trên máy chủ/bản sao lưu
+  theo chính sách doanh nghiệp. Chưa cam kết SLA hoặc thời hạn chưa được xác nhận.
 
 ## Kiểm tra
 
-Chạy `npm run build`. Sitemap dùng `pageKeys` và tự thêm sáu URL mới với
-canonical/hreflang tương ứng. Kiểm tra hiển thị desktop/mobile, mục lục, chuyển
-ngôn ngữ, liên kết email/điện thoại và điều hướng footer trước deploy.
+Chạy `npm run build`. Kiểm tra sáu trang support/privacy Việt/Anh/Nhật, nội dung AI
+nội bộ, mục lục, canonical/hreflang, liên kết hỗ trợ và điều hướng footer.
