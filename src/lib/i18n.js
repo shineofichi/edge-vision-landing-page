@@ -1,7 +1,13 @@
 export const defaultLocale = "vi";
 export const locales = ["vi", "en", "ja"];
 export const secondaryLocales = ["en", "ja"];
-export const pageKeys = ["home", "goodwork"];
+const pagePaths = {
+  home: '/',
+  goodwork: '/goodwork',
+  'goodwork-support': '/goodwork/support',
+  'goodwork-privacy': '/goodwork/privacy',
+};
+export const pageKeys = Object.keys(pagePaths);
 
 export const siteConfig = {
   siteUrl: "https://edgevision.io.vn",
@@ -886,13 +892,10 @@ export const getLocalizedPath = (locale, pageKey) => {
   const safeLocale = getLocale(locale);
   const safePageKey = pageKeys.includes(pageKey) ? pageKey : "home";
 
-  if (safeLocale === "vi") {
-    return safePageKey === "goodwork" ? "/goodwork" : "/";
-  }
-
-  return safePageKey === "goodwork"
-    ? `/${safeLocale}/goodwork`
-    : `/${safeLocale}`;
+  const path = pagePaths[safePageKey];
+  return safeLocale === 'vi'
+    ? path
+    : `/${safeLocale}${path === '/' ? '' : path}`;
 };
 
 export const toAbsoluteUrl = (path) =>

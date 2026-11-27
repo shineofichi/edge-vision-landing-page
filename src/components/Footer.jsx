@@ -2,14 +2,23 @@ import React from 'react';
 import { ArrowUpRight, Linkedin, Mail } from 'lucide-react';
 import { getLocalizedPath, getMessages, siteConfig } from '../lib/i18n';
 
+const documentLabels = {
+  vi: { support: 'Hỗ trợ Good Work', privacy: 'Chính sách bảo mật' },
+  en: { support: 'Good Work support', privacy: 'Privacy policy' },
+  ja: { support: 'Good Workサポート', privacy: 'プライバシーポリシー' },
+};
+
 const Footer = ({ lang = 'vi' }) => {
   const { footer } = getMessages(lang);
+  const documents = documentLabels[lang] || documentLabels.vi;
   const homePath = getLocalizedPath(lang, 'home');
   const footerLinks = [
     { name: footer.links[0].name, href: getLocalizedPath(lang, 'goodwork') },
     { name: footer.links[1].name, href: `${homePath}#products` },
     { name: footer.links[2].name, href: `${homePath}#team` },
     { name: footer.links[3].name, href: `${homePath}#contact` },
+    { name: documents.support, href: getLocalizedPath(lang, 'goodwork-support') },
+    { name: documents.privacy, href: getLocalizedPath(lang, 'goodwork-privacy') },
   ];
 
   return (

@@ -1,0 +1,17 @@
+---
+import Document from '../../../components/goodwork/Document.astro';
+import { secondaryLocales } from '../../../lib/i18n';
+
+export function getStaticPaths() {
+  return secondaryLocales.flatMap((lang) =>
+    ['support', 'privacy'].map((document) => ({
+      params: { lang, document },
+      props: { kind: document },
+    })),
+  );
+}
+
+const { kind } = Astro.props;
+---
+
+<Document kind={kind} lang={Astro.params.lang} />
